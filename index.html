@@ -25,6 +25,16 @@
     Flatdoc.run({
       fetcher: Flatdoc.github('pebble/pebblejs')
     });
+
+    $(function() {
+      function goToAnchor(timeout, retries, maxRetries) {
+        if (retries > maxRetries || window.scrollY !== 0 || window.location.hash === "") return;
+        window.location.href = window.location.hash;
+        timeout = timeout ? 2 * timeout : 100;
+        setTimeout(goToAnchor, timeout, timeout, (retries || 0) + 1, maxRetries || 10);
+      };
+      goToAnchor();
+    });
   </script>
 </head>
 <body role='flatdoc' class="large-brief">

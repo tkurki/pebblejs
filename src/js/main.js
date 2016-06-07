@@ -7,15 +7,16 @@
  */
 
 var safe = require('safe');
-var util2 = require('util2');
+var util2 = require('./lib/util2');
 
 Pebble.addEventListener('ready', function(e) {
   // Initialize the Pebble protocol
-  require('ui/simply-pebble.js').init();
+  console.log(require('./ui/simply-pebble.js'));
+  require('./ui/simply-pebble.js').init();
 
   // Backwards compatibility: place moment.js in global scope
   // This will be removed in a future update
-  var moment = require('vendor/moment');
+  var moment = require('./vendor/moment');
 
   var momentPasser = function(methodName) {
     return function() {

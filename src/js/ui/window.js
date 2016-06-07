@@ -1,14 +1,14 @@
-var util2 = require('util2');
-var myutil = require('myutil');
+var util2 = require('../lib/util2');
+var myutil = require('../lib/myutil');
 var safe = require('safe');
-var Emitter = require('emitter');
-var Vector2 = require('vector2');
-var Feature = require('platform/feature');
-var Accel = require('ui/accel');
-var WindowStack = require('ui/windowstack');
-var Propable = require('ui/propable');
-var Stage = require('ui/stage');
-var simply = require('ui/simply');
+var Emitter = require('../lib/emitter');
+var Vector2 = require('../lib/vector2');
+var Feature = require('../platform/feature');
+var Accel = require('./accel');
+var WindowStack = require('./windowstack');
+var Propable = require('./propable');
+var Stage = require('./stage');
+var simply = require('./simply');
 
 var buttons = [
   'back',

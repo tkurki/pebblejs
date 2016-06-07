@@ -1,8 +1,8 @@
-var util2 = require('lib/util2');
-var myutil = require('lib/myutil');
-var safe = require('lib/safe');
-var ajax = require('lib/ajax');
-var appinfo = require('appinfo');
+var util2 = require('../lib/util2');
+var myutil = require('../lib/myutil');
+var safe = require('safe');
+var ajax = require('../lib/ajax');
+var appinfo = require('../package');
 
 var Settings = module.exports;
 
@@ -62,7 +62,7 @@ Settings.getBaseOptions = function() {
 };
 
 Settings._getDataKey = function(path, field) {
-  path = path || appinfo.uuid;
+  path = path || appinfo.pebble.uuid;
   return field + ':' + path;
 };
 

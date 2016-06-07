@@ -1,8 +1,8 @@
-var myutil = require('lib/myutil');
-var appinfo = require('appinfo');
+var myutil = require('../lib/myutil');
+var appinfo = require('../package');
 
 var resources = (function() {
-  var resources = appinfo.resources;
+  var resources = appinfo.pebble.resources;
   return resources && resources.media || [];
 })();
 

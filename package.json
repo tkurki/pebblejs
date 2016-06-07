@@ -1,0 +1,56 @@
+{
+  "name": "pebblejs",
+  "author": "Meiguro",
+  "version": "0.5.0",
+  "repository": "pebble/pebblejs",
+  "license": "MIT",
+  "keywords": [
+    "pebble-app"
+  ],
+  "private": true,
+  "devDependencies": {
+    "coffee-script": "^1.10.0"
+  },
+  "pebble": {
+    "displayName": "Pebble.js",
+    "uuid": "133215f0-cf20-4c05-997b-3c9be5a64e5b",
+    "sdkVersion": "3",
+    "enableMultiJS": true,
+    "capabilities": [
+      "configurable"
+    ],
+    "targetPlatforms": [
+      "aplite",
+      "basalt",
+      "chalk"
+    ],
+    "watchapp": {
+      "watchface": false
+    },
+    "resources": {
+      "media": [
+        {
+          "file": "images/menu_icon.png",
+          "menuIcon": true,
+          "name": "IMAGE_MENU_ICON",
+          "type": "bitmap"
+        },
+        {
+          "file": "images/logo_splash.png",
+          "name": "IMAGE_LOGO_SPLASH",
+          "type": "bitmap"
+        },
+        {
+          "file": "images/tile_splash.png",
+          "name": "IMAGE_TILE_SPLASH",
+          "type": "bitmap"
+        },
+        {
+          "file": "fonts/UbuntuMono-Regular.ttf",
+          "name": "MONO_FONT_14",
+          "type": "font"
+        }
+      ]
+    }
+  }
+}

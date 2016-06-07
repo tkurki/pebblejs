@@ -12,6 +12,7 @@ out = 'build'
 def options(ctx):
     ctx.load('pebble_sdk')
 
+
 def configure(ctx):
     """
     This method is used to configure your build. ctx.load(`pebble_sdk`) automatically configures

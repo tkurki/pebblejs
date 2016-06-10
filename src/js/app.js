@@ -3,7 +3,7 @@
  *
  * This is where you write your app.
  */
-
+require('./main');
 var UI = require('./ui');
 var Vector2 = require('./lib/vector2');
 

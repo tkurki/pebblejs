@@ -25,7 +25,7 @@ tests.geolocationErrors = function () {
 };
 
 tests.loadAppinfo = function() {
-  console.log('longName: ' + require('../package').pebble.displayName);
+  console.log('longName: ' + require('/package').pebble.displayName);
 };
 
 tests.resolveBultinImagePath = function() {

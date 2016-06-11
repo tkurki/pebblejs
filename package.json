@@ -1,19 +1,13 @@
 {
   "name": "pebblejs",
   "author": "Meiguro",
-  "version": "0.5.0",
+  "version": "1.0.0",
   "repository": "pebble/pebblejs",
   "license": "MIT",
-  "keywords": [
-    "pebble-app"
-  ],
-  "private": true,
-  "devDependencies": {
-    "coffee-script": "^1.10.0"
-  },
+  "files": ["dist.zip"],
+  "keywords": ["pebble-package"],
   "pebble": {
-    "displayName": "Pebble.js",
-    "uuid": "133215f0-cf20-4c05-997b-3c9be5a64e5b",
+    "projectType": "package",
     "sdkVersion": "3",
     "enableMultiJS": true,
     "capabilities": [
@@ -24,9 +18,6 @@
       "basalt",
       "chalk"
     ],
-    "watchapp": {
-      "watchface": false
-    },
     "resources": {
       "media": [
         {

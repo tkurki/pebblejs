@@ -7,6 +7,7 @@ env:
   - PEBBLE_SDK_VERSION=3.13.1
 
 before_install:
+  - if [[ `npm -v` != 3* ]]; then npm i -g npm@3; fi
   - wget https://github.com/pebble/pebble-tool/releases/download/v4.4-dp2/pebble-sdk-4.4-dp2-linux64.tar.bz2?source=travis
   - mkdir -p ~/.pebble-sdk
   - tar -jxf pebble-sdk-* -C ~/.pebble-sdk

@@ -1,6 +1,5 @@
 var util2 = require('../lib/util2');
 var myutil = require('../lib/myutil');
-var safe = require('safe');
 var Emitter = require('../lib/emitter');
 var Vector2 = require('../lib/vector2');
 var Feature = require('../platform/feature');
@@ -58,11 +57,10 @@ var nextId = 1;
 
 var checkProps = function(def) {
   if (!def) return;
-  if ('fullscreen' in def && safe.warnFullscreen !== false) {
-    safe.warn('`fullscreen` has been deprecated by `status` which allows settings\n\t' +
-              'its color and separator in a similar manner to the `action` property.\n\t' +
-              'Remove usages of `fullscreen` to enable usage of `status`.', 2);
-    safe.warnFullscreen = false;
+  if ('fullscreen' in def) {
+    console.warn('`fullscreen` has been deprecated by `status` which allows settings\n\t' +
+                 'its color and separator in a similar manner to the `action` property.\n\t' +
+                 'Remove usages of `fullscreen` to enable usage of `status`.', 2);
   }
 };
 

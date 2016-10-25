@@ -6,7 +6,6 @@
  * By default, this will run app.js
  */
 
-var safe = require('safe');
 var util2 = require('./lib/util2');
 require('./ui/simply-pebble.js').init();
 

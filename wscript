@@ -11,9 +11,6 @@ out = 'build'
 
 def options(ctx):
     ctx.load('pebble_sdk')
-    ctx.load('aplite_legacy', tooldir='waftools')
-    ctx.load('configure_appinfo', tooldir='waftools')
-    ctx.load('pebble_sdk_version', tooldir='waftools')
 
 def configure(ctx):
     """
@@ -28,7 +25,6 @@ def configure(ctx):
                       '-Wno-type-limits',
                       '-Wno-missing-field-initializers']
     ctx.load('pebble_sdk')  # Need to remove -std=c99
-    ctx.configure_appinfo([ctx.appinfo_bitmap_to_png])
     ctx.find_program('coffee', var='COFFEE', path_list='node_modules/.bin')
 
 def build(ctx):

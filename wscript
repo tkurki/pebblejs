@@ -24,7 +24,12 @@ def configure(ctx):
                       '-Wno-address',
                       '-Wno-type-limits',
                       '-Wno-missing-field-initializers']
-    ctx.load('pebble_sdk')  # Need to remove -std=c99
+    ctx.load('pebble_sdk')
+
+    for _, env in ctx.all_envs.iteritems():
+        if '-std=c99' in env.CFLAGS:
+            env.CFLAGS.remove('-std=c99')
+
     ctx.find_program('coffee', var='COFFEE', path_list='node_modules/.bin')
 
 def build(ctx):

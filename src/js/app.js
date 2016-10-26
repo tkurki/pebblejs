@@ -3,9 +3,9 @@
  *
  * This is where you write your app.
  */
-
-var UI = require('ui');
-var Vector2 = require('vector2');
+require('./main');
+var UI = require('./ui');
+var Vector2 = require('./lib/vector2');
 
 var main = new UI.Card({
   title: 'Pebble.js',

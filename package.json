@@ -6,10 +6,12 @@
   "license": "MIT",
   "files": ["dist.zip"],
   "keywords": ["pebble-package"],
+  "devDependencies": {
+    "coffee-script": "^1.11.1"
+  },
   "pebble": {
     "projectType": "package",
     "sdkVersion": "3",
-    "enableMultiJS": true,
     "capabilities": [
       "configurable"
     ],

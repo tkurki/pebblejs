@@ -13,7 +13,7 @@
 
 #include <pebble.h>
 
-Simply *simply_init(void) {
+Simply *simply_create(void) {
   Simply *simply = malloc(sizeof(*simply));
   simply->accel = simply_accel_create(simply);
   simply->voice = simply_voice_create(simply);
@@ -33,7 +33,7 @@ Simply *simply_init(void) {
   return simply;
 }
 
-void simply_deinit(Simply *simply) {
+void simply_destroy(Simply *simply) {
   simply_window_stack_destroy(simply->window_stack);
   simply_ui_destroy(simply->ui);
   simply_msg_destroy(simply->msg);

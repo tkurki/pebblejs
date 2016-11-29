@@ -25,22 +25,22 @@
         {
           "file": "images/menu_icon.png",
           "menuIcon": true,
-          "name": "IMAGE_MENU_ICON",
+          "name": "SIMPLY_IMAGE_MENU_ICON",
           "type": "bitmap"
         },
         {
           "file": "images/logo_splash.png",
-          "name": "IMAGE_LOGO_SPLASH",
+          "name": "SIMPLY_IMAGE_LOGO_SPLASH",
           "type": "bitmap"
         },
         {
           "file": "images/tile_splash.png",
-          "name": "IMAGE_TILE_SPLASH",
+          "name": "SIMPLY_IMAGE_TILE_SPLASH",
           "type": "bitmap"
         },
         {
           "file": "fonts/UbuntuMono-Regular.ttf",
-          "name": "MONO_FONT_14",
+          "name": "SIMPLY_MONO_FONT_14",
           "type": "font"
         }
       ]

@@ -23,9 +23,9 @@ static void window_load(Window *window) {
   SimplySplash *self = window_get_user_data(window);
 
 #if defined(SPLASH_LOGO)
-  self->image = gbitmap_create_with_resource(RESOURCE_ID_IMAGE_LOGO_SPLASH);
+  self->image = gbitmap_create_with_resource(RESOURCE_ID_SIMPLY_IMAGE_LOGO_SPLASH);
 #else
-  self->image = gbitmap_create_with_resource(RESOURCE_ID_IMAGE_TILE_SPLASH);
+  self->image = gbitmap_create_with_resource(RESOURCE_ID_SIMPLY_IMAGE_TILE_SPLASH);
 #endif
 }
 

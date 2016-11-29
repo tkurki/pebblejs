@@ -37,7 +37,6 @@ enum ClearIndex {
 enum StyleIndex {
   StyleIndex_ClassicSmall = 0,
   StyleIndex_ClassicLarge,
-  StyleIndex_Mono,
   StyleIndex_Small,
   StyleIndex_Large,
   StyleIndexCount,
@@ -89,12 +88,6 @@ void initialize_styles(void) {
     .title_font = FONT_KEY_GOTHIC_28_BOLD,
     .subtitle_font = FONT_KEY_GOTHIC_28,
     .body_font = FONT_KEY_GOTHIC_24_BOLD,
-  };
-
-  STYLES[StyleIndex_Mono] = (SimplyStyle){
-    .title_font = FONT_KEY_GOTHIC_24_BOLD,
-    .subtitle_font = FONT_KEY_GOTHIC_18_BOLD,
-    .custom_body_font_id = RESOURCE_ID_MONO_FONT_14,
   };
 
   STYLES[StyleIndex_Small] = (SimplyStyle){

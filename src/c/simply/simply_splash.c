@@ -23,9 +23,10 @@ static void window_load(Window *window) {
   SimplySplash *self = window_get_user_data(window);
 
 #if defined(SPLASH_LOGO)
-  self->image = gbitmap_create_with_resource(RESOURCE_ID_IMAGE_LOGO_SPLASH);
-#else
-  self->image = gbitmap_create_with_resource(RESOURCE_ID_IMAGE_TILE_SPLASH);
+#if !defined(SPLASH_LOGO_RESOURCE_ID)
+#pragma message "Define SPLASH_LOGO_RESOURCE_ID as your splash logo image resource id."
+#endif
+  self->image = gbitmap_create_with_resource(SPLASH_LOGO_RESOURCE_ID);
 #endif
 }
 

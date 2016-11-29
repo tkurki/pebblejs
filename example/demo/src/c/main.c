@@ -2,7 +2,7 @@
 #include <pebblejs/simply.h>
 
 int main(void) {
-  Simply *simply = simply_init();
+  Simply *simply = simply_create();
   app_event_loop();
-  simply_deinit(simply);
+  simply_destroy(simply);
 }

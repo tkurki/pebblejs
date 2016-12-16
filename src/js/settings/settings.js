@@ -1,7 +1,7 @@
 var util2 = require('../lib/util2');
 var myutil = require('../lib/myutil');
 var ajax = require('../lib/ajax');
-var appinfo = require('../../../package');
+var appinfo = require('app_package.json');
 
 var Settings = module.exports;
 

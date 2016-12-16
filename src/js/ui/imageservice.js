@@ -11,7 +11,7 @@ var state;
 ImageService.init = function() {
   state = ImageService.state = {
     cache: {},
-    nextId: Resource.items.length + 1,
+    nextId: Resource.items.length + (2 << 15),
     rootUrl: undefined,
   };
 };

@@ -249,7 +249,7 @@ card.show();
 
 Whether you have a color Pebble or not, you will want to test your app in all platforms. You can see how your app looks in multiple platforms with the following local SDK command or by changing the current platform in CloudPebble.
 
-> `pebble build && pebble install --emulator=aplite && pebble install --emulator=basalt && pebble install --emulator=chalk`
+> `pebble build && pebble install --emulator=aplite && pebble install --emulator=basalt && pebble install --emulator=chalk && pebble install --emulator=diorite`
 
 Using too much color such as in the previous example can be overwhelming however. Just using one color that stands out in a single place can have a more defined effect and remain readable.
 
@@ -551,7 +551,7 @@ var Platform = require('pebblejs/platform');
 #### Platform.version()
 [Platform.version()]: #platform-version
 
-`Platform.version` returns the current platform version name as a lowercase string. This can be `'aplite'`, `'basalt'`, or `'chalk'`. Use the following table to determine the platform that `Platform.version` will return.
+`Platform.version` returns the current platform version name as a lowercase string. This can be `'aplite'`, `'basalt'`, `'chalk'` or `'diorite'`. Use the following table to determine the platform that `Platform.version` will return.
 
 | Watch Model          | Platform   |
 | ----                 | :----:     |
@@ -560,6 +560,7 @@ var Platform = require('pebblejs/platform');
 | Pebble Time          | `'basalt'` |
 | Pebble Time Steel    | `'basalt'` |
 | Pebble Time Round    | `'chalk'`  |
+| Pebble 2             | `'diorite'`|
 
 ````js
 console.log('Current platform is ' + Platform.version());
@@ -662,6 +663,7 @@ if (Feature.microphone()) {
 | aplite   | 144   | 168    |                                                                                                   |
 | basalt   | 144   | 168    | This is a rounded rectangle, therefore there is small set of pixels at each corner not available. |
 | chalk    | 180   | 180    | This is a circular display, therefore not all pixels in a 180 by 180 square are available.        |
+| diorite  | 144   | 168    |                                                                                                    |
 
 **NOTE:** [Window]s also have a [Window.size()] method which returns its size as a [Vector2]. Use [Window.size()] when possible.
 
@@ -973,7 +975,7 @@ wind.on('accelData', function(e) {
 ### Voice
 [Voice]: #voice
 
-The `Voice` module allows you to interact with Pebble's dictation API on supported platforms (Basalt and Chalk).
+The `Voice` module allows you to interact with Pebble's dictation API on supported platforms (Basalt, Chalk and Diorite).
 
 ````js
 var Voice = require('pebblejs/ui/voice');

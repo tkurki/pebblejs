@@ -19,9 +19,13 @@ main.show();
 
 var skItems = [];
 var skTree = {};
+var favorites = [];
 
 ajax(
-  { url: "http://192.168.1.103:3000/signalk/v1/api/self/values/", type: "json" },
+  {
+    url: "http://192.168.1.103:3000/signalk/v1/api/self/values/",
+    type: "json"
+  },
   function(data) {
     skItems = data;
     skTree = toTree(data);
@@ -73,18 +77,23 @@ function getSkMenuItems(tree, depth) {
 }
 
 function getItem(data, index) {
-  return data[
-    Object.getOwnPropertyNames(data).filter(function(item) {
+  var branches = [];
+  if (typeof data === "object") {
+    branches = Object.getOwnPropertyNames(data).filter(function(item) {
       return item != "values";
-    })[index]
-  ];
+    });
+  }
+  if (index < branches.length) {
+    return data[branches[index]];
+  }
+  return data.values[index - branches.length];
 }
 
 function isLeaf(node, itemIndex) {
   var propsCount = Object.getOwnPropertyNames(node).filter(function(item) {
     return item != "values";
   }).length;
- return itemIndex >= propsCount;
+  return itemIndex >= propsCount;
 }
 
 function showMenu(tree, depth) {
@@ -100,8 +109,17 @@ function showMenu(tree, depth) {
       "Selected item #" + e.itemIndex + " of section #" + e.sectionIndex
     );
     console.log('The item is titled "' + e.item.title + '"');
-    if (!isLeaf(tree, e.itemIndex)) {
-      showMenu(getItem(tree, e.itemIndex), depth + 1);
+    var item = getItem(tree, e.itemIndex);
+    if (isLeaf(tree, e.itemIndex)) {
+      favorites = favorites.filter(function(favorite) {
+        return (
+          favorite.path != item.path || favorite.sourceRef != item.sourceRef
+        );
+      });
+      favorites.push(item);
+      console.log(JSON.stringify(favorites, null, 2));
+    } else {
+      showMenu(item, depth + 1);
     }
   });
   menu.show();

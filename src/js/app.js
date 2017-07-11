@@ -187,27 +187,39 @@ function showData(incomingFavorite) {
   wind.show();
 
   wind.on("click", "down", function() {
-    showData(currentFavorite - 1);
+    updateData(currentFavorite + 1, showData(currentFavorite + 1));
     wind.hide();
   });
   wind.on("click", "up", function() {
-    showData(currentFavorite + 1);
+    updateData(currentFavorite - 1, showData(currentFavorite - 1));
     wind.hide();
   });
 
   wind.on("click", "select", function() {
-    if (favorites.length > currentFavorite) {
-      ajax(
-        {
-          url: url + favorites[currentFavorite].path + "/" + favorites[currentFavorite].sourceRef,
-          type: "json"
-        },
-        function(data) {
-          console.log(data)
-        }
-      );
-    }
+    updateData(currentFavorite, wind);
   });
+
+  return wind;
+}
+
+function updateData(favoriteIndex, wind) {
+  if (favorites.length > favoriteIndex && favoriteIndex >= 0) {
+    ajax(
+      {
+        url:
+          url +
+          favorites[favoriteIndex].path +
+          "/" +
+          favorites[favoriteIndex].sourceRef,
+        type: "json"
+      },
+      function(data) {
+        favorites[favoriteIndex] = data;
+        showData(favoriteIndex);
+        wind.hide();
+      }
+    );
+  }
 }
 
 main.on("click", "down", function(e) {

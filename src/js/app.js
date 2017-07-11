@@ -21,10 +21,14 @@ var skItems = [];
 var skTree = {};
 var favorites = [];
 var currentFavorite = 0;
+var host = "192.168.1.103";
+var port = 3000;
+var url =
+  "http://" + host + (port ? ":" + port : "") + "/signalk/v1/api/self/values/";
 
 ajax(
   {
-    url: "http://192.168.1.103:3000/signalk/v1/api/self/values/",
+    url: url,
     type: "json"
   },
   function(data) {
@@ -181,6 +185,7 @@ function showData(incomingFavorite) {
   wind.add(radial);
   wind.add(textfield);
   wind.show();
+
   wind.on("click", "down", function() {
     showData(currentFavorite - 1);
     wind.hide();
@@ -188,6 +193,20 @@ function showData(incomingFavorite) {
   wind.on("click", "up", function() {
     showData(currentFavorite + 1);
     wind.hide();
+  });
+
+  wind.on("click", "select", function() {
+    if (favorites.length > currentFavorite) {
+      ajax(
+        {
+          url: url + favorites[currentFavorite].path + "/" + favorites[currentFavorite].sourceRef,
+          type: "json"
+        },
+        function(data) {
+          console.log(data)
+        }
+      );
+    }
   });
 }
 

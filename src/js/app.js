@@ -19,24 +19,27 @@ main.show();
 
 var skItems = [];
 var skTree = {};
-var favorites = [];
-var currentFavorite = 0;
+var favorites = [
+  {
+    path: "navigation.speedThroughWater",
+    value: 3.07,
+    sourceRef: "n2kFromFile.115"
+  },
+  {
+    path: "navigation.speedOverGround",
+    value: 2.95,
+    sourceRef: "n2kFromFile.160"
+  },
+  {
+    path: "electrical.batteries.1.voltage",
+    value: 14.55,
+    sourceRef: "n2kFromFile.129"
+  }
+];
 var host = "192.168.1.103";
 var port = 3000;
 var url =
   "http://" + host + (port ? ":" + port : "") + "/signalk/v1/api/self/values/";
-
-ajax(
-  {
-    url: url,
-    type: "json"
-  },
-  function(data) {
-    skItems = data;
-    skTree = toTree(data);
-    console.log(data);
-  }
-);
 
 function toTree(items) {
   var tree = {};
@@ -131,7 +134,17 @@ function showMenu(tree, depth) {
 }
 
 main.on("click", "up", function(e) {
-  showMenu(skTree, 0);
+  ajax(
+    {
+      url: url,
+      type: "json"
+    },
+    function(data) {
+      skItems = data;
+      skTree = toTree(data);
+      showMenu(skTree, 0);
+    }
+  );
 });
 
 main.on("click", "select", function(e) {
@@ -147,7 +160,7 @@ function showData(incomingFavorite) {
     currentFavorite = favorites.length - 1;
   }
   var wind = new UI.Window({
-    backgroundColor: "black"
+    backgroundColor: "white"
   });
   var radial = new UI.Radial({
     size: new Vector2(140, 140),
@@ -160,13 +173,26 @@ function showData(incomingFavorite) {
   });
   var textfield = new UI.Text({
     size: new Vector2(140, 60),
-    font: "gothic-24-bold",
+    color: "black",
+    font: "bitham-42-bold",
     text:
       favorites.length > currentFavorite
         ? favorites[currentFavorite].value
         : "N/A",
     textAlign: "center"
   });
+
+  var legendText = new UI.Text({
+    size: new Vector2(140, 60),
+    color: "black",
+    font: "gothic-14-bold",
+    text:
+      favorites.length > currentFavorite
+        ? favorites[currentFavorite].path
+        : "N/A",
+    textAlign: "center"
+  });
+
   var windSize = wind.size();
   // Center the radial in the window
   var radialPos = radial
@@ -182,8 +208,17 @@ function showData(incomingFavorite) {
     .subSelf(textfield.size())
     .multiplyScalar(0.5);
   textfield.position(textfieldPos);
-  wind.add(radial);
+
+  var legendTextPosition = legendText.position();
+  // .addSelf(windSize)
+  // .subSelf(legendText.size())
+  // .multiplyScalar(0.6);
+  legendText.position(legendTextPosition);
+
+  // wind.add(radial);
   wind.add(textfield);
+  wind.add(legendText);
+
   wind.show();
 
   wind.on("click", "down", function() {

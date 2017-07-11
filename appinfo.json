@@ -4,7 +4,7 @@
     "configurable"
   ],
   "companyName": "Meiguro",
-  "longName": "Pebble.js",
+  "longName": "Signal K Navigator",
   "resources": {
     "media": [
       {
@@ -31,7 +31,7 @@
     ]
   },
   "sdkVersion": "3",
-  "shortName": "Pebble.js",
+  "shortName": "SK navigator",
   "targetPlatforms": [
     "aplite",
     "basalt",

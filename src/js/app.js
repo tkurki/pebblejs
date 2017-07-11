@@ -7,6 +7,7 @@
 var UI = require("ui");
 var Vector2 = require("vector2");
 var ajax = require("ajax");
+var Settings = require("settings");
 
 var main = new UI.Card({
   title: "Signal K",
@@ -19,23 +20,27 @@ main.show();
 
 var skItems = [];
 var skTree = {};
-var favorites = [
-  {
-    path: "navigation.speedThroughWater",
-    value: 3.07,
-    sourceRef: "n2kFromFile.115"
-  },
-  {
-    path: "navigation.speedOverGround",
-    value: 2.95,
-    sourceRef: "n2kFromFile.160"
-  },
-  {
-    path: "electrical.batteries.1.voltage",
-    value: 14.55,
-    sourceRef: "n2kFromFile.129"
-  }
-];
+var favorites;
+if (!Settings.data("favorites")) {
+  Settings.data("favorites", [
+    {
+      path: "navigation.speedThroughWater",
+      value: 3.07,
+      sourceRef: "n2kFromFile.115"
+    },
+    {
+      path: "navigation.speedOverGround",
+      value: 2.95,
+      sourceRef: "n2kFromFile.160"
+    },
+    {
+      path: "electrical.batteries.1.voltage",
+      value: 14.55,
+      sourceRef: "n2kFromFile.129"
+    }
+  ]);
+}
+
 var host = "192.168.1.103";
 var port = 3000;
 var url =
@@ -119,12 +124,13 @@ function showMenu(tree, depth) {
     console.log('The item is titled "' + e.item.title + '"');
     var item = getItem(tree, e.itemIndex);
     if (isLeaf(tree, e.itemIndex)) {
-      favorites = favorites.filter(function(favorite) {
+      var favorites = Settings.data("favorites").filter(function(favorite) {
         return (
           favorite.path != item.path || favorite.sourceRef != item.sourceRef
         );
       });
       favorites.push(item);
+      Settings.data("favorites", favorites);
       console.log(JSON.stringify(favorites, null, 2));
     } else {
       showMenu(item, depth + 1);
@@ -148,6 +154,7 @@ main.on("click", "up", function(e) {
 });
 
 main.on("click", "select", function(e) {
+  favorites = Settings.data('favorites')
   showData(0);
 });
 

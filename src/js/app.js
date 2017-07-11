@@ -154,7 +154,7 @@ main.on("click", "up", function(e) {
 });
 
 main.on("click", "select", function(e) {
-  favorites = Settings.data('favorites')
+  favorites = Settings.data("favorites");
   showData(0);
 });
 
@@ -239,6 +239,13 @@ function showData(incomingFavorite) {
 
   wind.on("click", "select", function() {
     updateData(currentFavorite, wind);
+  });
+
+  wind.on("longClick", "select", function() {
+    favorites.splice(currentFavorite, 1);
+    Settings.data("favorites", favorites);
+    showData(currentFavorite);
+    wind.hide();
   });
 
   return wind;

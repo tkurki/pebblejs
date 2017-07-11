@@ -80,12 +80,11 @@ function getItem(data, index) {
   ];
 }
 
-function isLeaf(node) {
-  return (
-    Object.getOwnPropertyNames(node).filter(function(item) {
-      return item != "values";
-    }).length === 0
-  );
+function isLeaf(node, itemIndex) {
+  var propsCount = Object.getOwnPropertyNames(node).filter(function(item) {
+    return item != "values";
+  }).length;
+ return itemIndex >= propsCount;
 }
 
 function showMenu(tree, depth) {
@@ -101,7 +100,7 @@ function showMenu(tree, depth) {
       "Selected item #" + e.itemIndex + " of section #" + e.sectionIndex
     );
     console.log('The item is titled "' + e.item.title + '"');
-    if (!isLeaf(tree)) {
+    if (!isLeaf(tree, e.itemIndex)) {
       showMenu(getItem(tree, e.itemIndex), depth + 1);
     }
   });

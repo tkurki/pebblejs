@@ -4,85 +4,157 @@
  * This is where you write your app.
  */
 
-var UI = require('ui');
-var Vector2 = require('vector2');
+var UI = require("ui");
+var Vector2 = require("vector2");
+var ajax = require("ajax");
 
 var main = new UI.Card({
-  title: 'Pebble.js',
-  icon: 'images/menu_icon.png',
-  subtitle: 'Hello World!',
-  body: 'Press any button.',
-  subtitleColor: 'indigo', // Named colors
-  bodyColor: '#9a0036' // Hex colors
+  title: "Signal K",
+  body: "Press any button.",
+  subtitleColor: "indigo", // Named colors
+  bodyColor: "#9a0036" // Hex colors
 });
 
 main.show();
 
-main.on('click', 'up', function(e) {
-  var menu = new UI.Menu({
-    sections: [{
-      items: [{
-        title: 'Pebble.js',
-        icon: 'images/menu_icon.png',
-        subtitle: 'Can do Menus'
-      }, {
-        title: 'Second Item',
-        subtitle: 'Subtitle Text'
-      }, {
-        title: 'Third Item',
-      }, {
-        title: 'Fourth Item',
-      }]
-    }]
+var skItems = [];
+var skTree = {};
+
+ajax(
+  { url: "http://192.168.1.103:3000/signalk/v1/api/self/values/", type: "json" },
+  function(data) {
+    skItems = data;
+    skTree = toTree(data);
+    console.log(data);
+  }
+);
+
+function toTree(items) {
+  var tree = {};
+  items.map(function(item) {
+    var currentNode = tree;
+    item.path.split(".").forEach(function(pathPart, index, array) {
+      if (index < array.length - 1) {
+        if (!currentNode[pathPart]) {
+          currentNode[pathPart] = {
+            values: []
+          };
+        }
+        currentNode = currentNode[pathPart];
+      }
+    });
+    currentNode.values.push(item);
   });
-  menu.on('select', function(e) {
-    console.log('Selected item #' + e.itemIndex + ' of section #' + e.sectionIndex);
+  return tree;
+}
+
+function getLastPathPart(path) {
+  var parts = path.split(".");
+  return parts[parts.length - 1];
+}
+
+function getSkMenuItems(tree, depth) {
+  var result = [];
+  for (var property in tree) {
+    if (property !== "values") {
+      result.push({
+        title: property
+      });
+    }
+  }
+  tree.values &&
+    tree.values.forEach(function(item) {
+      result.push({
+        title: item.value,
+        subtitle: getLastPathPart(item.path)
+      });
+    });
+  return result;
+}
+
+function getItem(data, index) {
+  return data[
+    Object.getOwnPropertyNames(data).filter(function(item) {
+      return item != "values";
+    })[index]
+  ];
+}
+
+function isLeaf(node) {
+  return (
+    Object.getOwnPropertyNames(node).filter(function(item) {
+      return item != "values";
+    }).length === 0
+  );
+}
+
+function showMenu(tree, depth) {
+  var menu = new UI.Menu({
+    sections: [
+      {
+        items: getSkMenuItems(tree, depth)
+      }
+    ]
+  });
+  menu.on("select", function(e) {
+    console.log(
+      "Selected item #" + e.itemIndex + " of section #" + e.sectionIndex
+    );
     console.log('The item is titled "' + e.item.title + '"');
+    if (!isLeaf(tree)) {
+      showMenu(getItem(tree, e.itemIndex), depth + 1);
+    }
   });
   menu.show();
+}
+
+main.on("click", "up", function(e) {
+  showMenu(skTree, 0);
 });
 
-main.on('click', 'select', function(e) {
+main.on("click", "select", function(e) {
   var wind = new UI.Window({
-    backgroundColor: 'black'
+    backgroundColor: "black"
   });
   var radial = new UI.Radial({
     size: new Vector2(140, 140),
     angle: 0,
     angle2: 300,
     radius: 20,
-    backgroundColor: 'cyan',
-    borderColor: 'celeste',
-    borderWidth: 1,
+    backgroundColor: "cyan",
+    borderColor: "celeste",
+    borderWidth: 1
   });
   var textfield = new UI.Text({
     size: new Vector2(140, 60),
-    font: 'gothic-24-bold',
-    text: 'Dynamic\nWindow',
-    textAlign: 'center'
+    font: "gothic-24-bold",
+    text: "Dynamic\nWindow",
+    textAlign: "center"
   });
   var windSize = wind.size();
   // Center the radial in the window
-  var radialPos = radial.position()
-      .addSelf(windSize)
-      .subSelf(radial.size())
-      .multiplyScalar(0.5);
+  var radialPos = radial
+    .position()
+    .addSelf(windSize)
+    .subSelf(radial.size())
+    .multiplyScalar(0.5);
   radial.position(radialPos);
   // Center the textfield in the window
-  var textfieldPos = textfield.position()
-      .addSelf(windSize)
-      .subSelf(textfield.size())
-      .multiplyScalar(0.5);
+  var textfieldPos = textfield
+    .position()
+    .addSelf(windSize)
+    .subSelf(textfield.size())
+    .multiplyScalar(0.5);
   textfield.position(textfieldPos);
   wind.add(radial);
   wind.add(textfield);
   wind.show();
 });
 
-main.on('click', 'down', function(e) {
+main.on("click", "down", function(e) {
   var card = new UI.Card();
-  card.title('A Card');
-  card.subtitle('Is a Window');
-  card.body('The simplest window type in Pebble.js.');
+  card.title("A Card");
+  card.subtitle("Is a Window");
+  card.body("The simplest window type in Pebble.js.");
   card.show();
 });

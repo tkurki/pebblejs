@@ -20,6 +20,7 @@ main.show();
 var skItems = [];
 var skTree = {};
 var favorites = [];
+var currentFavorite = 0;
 
 ajax(
   {
@@ -130,13 +131,24 @@ main.on("click", "up", function(e) {
 });
 
 main.on("click", "select", function(e) {
+  showData(0);
+});
+
+function showData(incomingFavorite) {
+  var currentFavorite = incomingFavorite;
+  if (currentFavorite < 0) {
+    currentFavorite = 0;
+  }
+  if (currentFavorite >= favorites.length && favorites.length > 0) {
+    currentFavorite = favorites.length - 1;
+  }
   var wind = new UI.Window({
     backgroundColor: "black"
   });
   var radial = new UI.Radial({
     size: new Vector2(140, 140),
     angle: 0,
-    angle2: 300,
+    angle2: 360,
     radius: 20,
     backgroundColor: "cyan",
     borderColor: "celeste",
@@ -145,7 +157,10 @@ main.on("click", "select", function(e) {
   var textfield = new UI.Text({
     size: new Vector2(140, 60),
     font: "gothic-24-bold",
-    text: "Dynamic\nWindow",
+    text:
+      favorites.length > currentFavorite
+        ? favorites[currentFavorite].value
+        : "N/A",
     textAlign: "center"
   });
   var windSize = wind.size();
@@ -166,7 +181,15 @@ main.on("click", "select", function(e) {
   wind.add(radial);
   wind.add(textfield);
   wind.show();
-});
+  wind.on("click", "down", function() {
+    showData(currentFavorite - 1);
+    wind.hide();
+  });
+  wind.on("click", "up", function() {
+    showData(currentFavorite + 1);
+    wind.hide();
+  });
+}
 
 main.on("click", "down", function(e) {
   var card = new UI.Card();

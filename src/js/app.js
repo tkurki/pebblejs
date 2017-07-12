@@ -85,7 +85,7 @@ function getSkMenuItems(tree, depth) {
   tree.values &&
     tree.values.forEach(function(item) {
       result.push({
-        title: item.value,
+        title: getDisplayValue(item.value),
         subtitle: getLastPathPart(item.path)
       });
     });
@@ -162,6 +162,23 @@ main.on("click", "select", function(e) {
   showData(0);
 });
 
+function getDisplayValue(value) {
+  try {
+    if (typeof value === "number") {
+      return value.toFixed(2);
+    } else {
+      return Object.keys(value)
+        .map(function(key) {
+          return key + ":" + value.key;
+        })
+        .join(",");
+    }
+  } catch (error) {
+    console.log(error);
+    return "--";
+  }
+}
+
 function showData(incomingFavorite) {
   var currentFavorite = incomingFavorite;
   if (currentFavorite < 0) {
@@ -188,7 +205,7 @@ function showData(incomingFavorite) {
     font: "bitham-42-bold",
     text:
       favorites.length > currentFavorite
-        ? favorites[currentFavorite].value
+        ? getDisplayValue(favorites[currentFavorite].value)
         : "N/A",
     textAlign: "center"
   });

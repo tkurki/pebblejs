@@ -42,8 +42,10 @@ if (!Settings.data("favorites")) {
   ]);
 }
 
-var host = "192.168.1.103";
-var port = 3000;
+var host = "192.168.74.1";
+// var host = "192.168.1.103";
+// var port = 3000;
+var port = 80;
 var url =
   "http://" + host + (port ? ":" + port : "") + "/signalk/v1/api/self/values/";
 

@@ -8,6 +8,7 @@ var UI = require("ui");
 var Vector2 = require("vector2");
 var ajax = require("ajax");
 var Settings = require("settings");
+var Vibe = require("ui/vibe");
 
 var main = new UI.Card({
   title: "Signal K",
@@ -131,6 +132,7 @@ function showMenu(tree, depth) {
       });
       favorites.push(item);
       Settings.data("favorites", favorites);
+      Vibe.vibrate();
       console.log(JSON.stringify(favorites, null, 2));
     } else {
       showMenu(item, depth + 1);
@@ -244,6 +246,7 @@ function showData(incomingFavorite) {
   wind.on("longClick", "select", function() {
     favorites.splice(currentFavorite, 1);
     Settings.data("favorites", favorites);
+    Vibe.vibrate();
     showData(currentFavorite);
     wind.hide();
   });
